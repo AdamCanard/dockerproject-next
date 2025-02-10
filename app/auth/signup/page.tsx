@@ -21,7 +21,7 @@ export default function Page() {
         "flex flex-col gap-2 justify-center items-center w-full h-full "
       }
     >
-      <h1>Login</h1>
+      <h1>SignUp</h1>
       <form className={"w-72 flex flex-col gap-2"}>
         <div className={"w-full flex justify-between"}>
           <label>Username:</label>
@@ -45,9 +45,9 @@ export default function Page() {
           />
         </div>
         <div className={"w-full flex flex-row justify-between"}>
-          <button onClick={() => router.push("/auth/signup")} type="button">
+          <button onClick={() => router.push("/auth/login")} type="button">
             {" "}
-            Sign Up
+            Login
           </button>
           <button>Submit</button>
         </div>
