@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export default function middleware(req: NextRequest) {
-  const userId = req.cookies.get("userId");
-  const authToken = req.cookies.get("authToken");
+  if (req.nextUrl.pathname.startsWith("/_next")) {
+    return NextResponse.next();
+  }
 
-  console.log(userId, authToken);
+  if (req.nextUrl.pathname.startsWith("/auth/")) {
+  } else {
+    const userId = req.cookies.get("userId");
+    const authToken = req.cookies.get("authToken");
 
-  if (authToken === undefined || userId === undefined) {
-    return NextResponse.rewrite(new URL("/auth/login", req.url));
+    if (authToken === undefined || userId === undefined) {
+      return NextResponse.rewrite(new URL("/auth/login", req.url));
+    }
   }
 }
