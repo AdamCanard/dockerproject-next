@@ -3,8 +3,6 @@ const { Pool } = pg;
 export const pool = new Pool({
   host: "localhost",
   port: 5432,
-  database: "docker",
   user: "postgres",
   password: "P@ssw0rd",
 });
-module.exports = pool;
