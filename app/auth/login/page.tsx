@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function Page() {
   const [username, setUsername] = useState<string>("");
@@ -15,6 +15,20 @@ export default function Page() {
     setPassword(e.target.value);
   };
 
+  const getUsers = async () => {
+    try {
+      const response = await fetch("/api/users", { method: "GET" });
+      console.log(await response.json());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await getUsers();
+  };
+
   return (
     <div
       className={
@@ -22,7 +36,10 @@ export default function Page() {
       }
     >
       <h1>Login</h1>
-      <form className={"w-72 flex flex-col gap-2"}>
+      <form
+        className={"w-72 flex flex-col gap-2"}
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <div className={"w-full flex justify-between"}>
           <label>Username:</label>
           <input
