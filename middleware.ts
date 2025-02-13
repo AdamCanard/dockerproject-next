@@ -12,9 +12,8 @@ export default function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith("/auth/")) {
   } else {
     const userId = req.cookies.get("userId");
-    const authToken = req.cookies.get("authToken");
 
-    if (authToken === undefined || userId === undefined) {
+    if (userId === undefined) {
       return NextResponse.rewrite(new URL("/auth/login", req.url));
     }
   }
