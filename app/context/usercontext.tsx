@@ -10,20 +10,21 @@ import {
 } from "react";
 
 interface IUserContext {
-  userId: string;
-  setUserId: Dispatch<SetStateAction<string>>;
+  userId: number;
+  setUserId: Dispatch<SetStateAction<number>>;
 }
 
 export const UserContext = createContext({} as IUserContext);
 
 export default function UserContextProvider(props: { children: ReactNode }) {
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(0);
   const getUserId = useCallback(async () => {
     try {
       const response = await fetch("/api/auth/", { method: "GET" });
       if (response.ok) {
         const data = await response.json();
-        setUserId(data.userId + "");
+        console.log(data.userId.value);
+        setUserId(data.userId.value);
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
@@ -33,7 +34,7 @@ export default function UserContextProvider(props: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (userId === "") {
+    if (userId === 0) {
       getUserId();
     }
   }, [getUserId, userId]);

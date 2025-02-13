@@ -1,12 +1,18 @@
 "use client";
 import { useContext } from "react";
-import { UserContext } from "./context/usercontext";
+import UserContextProvider, { UserContext } from "./context/usercontext";
 
 export default function Home() {
-  const { userId } = useContext(UserContext);
-  return <UserFile userId={userId} />;
+  return (
+    <>
+      <UserContextProvider>
+        <UserFile />
+      </UserContextProvider>
+    </>
+  );
 }
 
-function UserFile(props: { userId: string }) {
-  return <>{props.userId}</>;
+function UserFile() {
+  const { userId } = useContext(UserContext);
+  return <div>{userId}</div>;
 }
