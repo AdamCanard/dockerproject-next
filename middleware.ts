@@ -19,4 +19,5 @@ export default function middleware(req: NextRequest) {
       return NextResponse.rewrite(new URL("/auth/login", req.url));
     }
   }
+  return NextResponse.next();
 }
