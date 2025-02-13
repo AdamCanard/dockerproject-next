@@ -15,10 +15,14 @@ export default function Page() {
     setPassword(e.target.value);
   };
 
-  const getUsers = async () => {
+  const getUsers = async (formData: FormData) => {
     try {
-      const response = await fetch("/api/users", { method: "GET" });
-      console.log(await response.json());
+      const response = await fetch("/api/users", {
+        method: "POST",
+        body: formData,
+      });
+      await response.json();
+      router.refresh();
     } catch (e) {
       console.log(e);
     }
@@ -26,7 +30,10 @@ export default function Page() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await getUsers();
+    const formData = new FormData(e.currentTarget);
+    setUsername("");
+    setPassword("");
+    await getUsers(formData);
   };
 
   return (
