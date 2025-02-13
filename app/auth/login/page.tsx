@@ -23,7 +23,7 @@ export default function Page() {
       });
       await response.json();
       if (response.status === 200) {
-        router.push("");
+        router.push("/");
       }
     } catch (e) {
       console.log(e);
