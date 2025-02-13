@@ -22,7 +22,9 @@ export default function Page() {
         body: formData,
       });
       await response.json();
-      router.refresh();
+      if (response.status === 200) {
+        router.push("");
+      }
     } catch (e) {
       console.log(e);
     }
