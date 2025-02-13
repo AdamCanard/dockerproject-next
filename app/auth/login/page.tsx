@@ -17,7 +17,7 @@ export default function Page() {
 
   const getUsers = async (formData: FormData) => {
     try {
-      const response = await fetch("/api/users", {
+      const response = await fetch("/api/login", {
         method: "POST",
         body: formData,
       });
