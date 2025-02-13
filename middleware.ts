@@ -9,10 +9,12 @@ export default function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  const userId = req.cookies.get("userId");
   if (req.nextUrl.pathname.startsWith("/auth/")) {
+    if (userId !== undefined) {
+      return NextResponse.rewrite(new URL("/", req.url));
+    }
   } else {
-    const userId = req.cookies.get("userId");
-
     if (userId === undefined) {
       return NextResponse.rewrite(new URL("/auth/login", req.url));
     }
