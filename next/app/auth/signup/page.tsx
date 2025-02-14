@@ -20,10 +20,10 @@ export default function Page() {
         method: "POST",
         body: formData,
       });
-      await response.json();
-      console.log(response.status);
+      console.log(response);
+      console.log(await response.json());
       if (response.status === 201) {
-        router.push("/auth/login");
+        //router.push("/auth/login");
       }
     } catch (e) {
       console.log(e);
