@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function Page() {
-  const [username, setUsername] = useState<string>("");
+  const [userId, setUserId] = useState<number>(0);
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
-  const handleUsername = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+  const addUserId = (increase: number) => {
+    console.log(increase);
+    const newUserId = userId + increase;
+    setUserId(newUserId);
   };
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -33,7 +35,8 @@ export default function Page() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    setUsername("");
+    setUserId(0);
+
     setPassword("");
     await getUsers(formData);
   };
@@ -49,21 +52,46 @@ export default function Page() {
         className={"w-72 flex flex-col gap-2"}
         onSubmit={(e) => handleSubmit(e)}
       >
-        <div className={"w-full flex justify-between"}>
+        <div className={"w-full flex justify-between flex-col"}>
           <label>Username:</label>
-          <input
-            name="username"
-            value={username}
-            onChange={(e) => {
-              handleUsername(e);
-            }}
-          />
+          <div className={"flex flex-row justify-around w-full"}>
+            <input
+              disabled
+              className={"w-full text-center"}
+              name="username"
+              value={userId}
+            />
+            <div className={"flex w-full justify-around"}>
+              <button
+                type="button"
+                onClick={() => addUserId(1)}
+                className={"w-10"}
+              >
+                +1
+              </button>
+              <button
+                type="button"
+                onClick={() => addUserId(5)}
+                className={"w-10"}
+              >
+                +5
+              </button>
+              <button
+                type="button"
+                onClick={() => addUserId(10)}
+                className={"w-10"}
+              >
+                +10
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div className={"w-full flex justify-between"}>
+        <div className={"w-full flex justify-between flex-col"}>
           <label>Password:</label>
           <input
             name="password"
+            type="password"
             value={password}
             onChange={(e) => {
               handlePassword(e);

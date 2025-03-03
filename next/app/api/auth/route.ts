@@ -22,3 +22,10 @@ export async function GET() {
     status: 200,
   });
 }
+export async function DELETE() {
+  const cookieInstance = await cookies();
+  const userId = cookieInstance.delete("userId");
+  return new Response(JSON.stringify({ userId: userId }), {
+    status: 200,
+  });
+}

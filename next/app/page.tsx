@@ -1,14 +1,15 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import UserContextProvider, { UserContext } from "./context/usercontext";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   return (
-    <>
+    <div className={"flex w-dvw h-dvh justify-center items-center"}>
       <UserContextProvider>
         <UserFile />
       </UserContextProvider>
-    </>
+    </div>
   );
 }
 
@@ -16,19 +17,39 @@ function UserFile() {
   const { userData, updateData } = useContext(UserContext);
   const [currentUserData, setCurrentUserData] = useState<string>("");
 
-  const handleClick = () => {
+  const router = useRouter();
+  const handleSave = () => {
     updateData(currentUserData);
+  };
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/auth", {
+        method: "DELETE",
+      });
+      await response.json();
+      if (response.status === 200) {
+        router.refresh();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   useEffect(() => {
     setCurrentUserData(userData);
   }, [userData]);
   return (
-    <div className={"flex flex-col w-full h-full justify-center items-center"}>
+    <div className={"flex flex-col w-96 h-64 justify-center items-center "}>
       <textarea
+        autoFocus
+        className={"w-full h-full resize-none"}
         value={currentUserData}
         onChange={(e) => setCurrentUserData(e.target.value)}
       />
-      <button onClick={handleClick}>Save</button>
+      <div className={"flex flex-row justify-between w-full"}>
+        {" "}
+        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleSave}>Save</button>
+      </div>
     </div>
   );
 }

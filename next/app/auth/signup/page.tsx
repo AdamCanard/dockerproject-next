@@ -4,13 +4,9 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function Page() {
-  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
-  const handleUsername = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
@@ -33,7 +29,6 @@ export default function Page() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    setUsername("");
     setPassword("");
     await createUser(formData);
   };
@@ -48,17 +43,6 @@ export default function Page() {
         className={"w-72 flex flex-col gap-2"}
         onSubmit={(e) => handleSubmit(e)}
       >
-        <div className={"w-full flex justify-between"}>
-          <label>Username:</label>
-          <input
-            name="username"
-            value={username}
-            onChange={(e) => {
-              handleUsername(e);
-            }}
-          />
-        </div>
-
         <div className={"w-full flex justify-between"}>
           <label>Password:</label>
           <input
