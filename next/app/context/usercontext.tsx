@@ -12,19 +12,23 @@ import {
 interface IUserContext {
   userId: number;
   setUserId: Dispatch<SetStateAction<number>>;
+  userData: string;
+  updateData: (arg0: string) => void;
 }
 
 export const UserContext = createContext({} as IUserContext);
 
 export default function UserContextProvider(props: { children: ReactNode }) {
   const [userId, setUserId] = useState(0);
+  const [userData, setUserData] = useState("");
+
   const getUserId = useCallback(async () => {
     try {
       const response = await fetch("/api/auth/", { method: "GET" });
       if (response.ok) {
         const data = await response.json();
-        console.log(data.userId.value);
         setUserId(data.userId.value);
+        setUserData(data.userData);
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
@@ -32,6 +36,22 @@ export default function UserContextProvider(props: { children: ReactNode }) {
       }
     }
   }, []);
+  const updateData = async (newUserData: string) => {
+    try {
+      const response = await fetch("/api/userData/", {
+        method: "PUT",
+        body: JSON.stringify({ userData: newUserData }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data.userData);
+      }
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        return new Response(JSON.stringify({}));
+      }
+    }
+  };
 
   useEffect(() => {
     if (userId === 0) {
@@ -40,7 +60,7 @@ export default function UserContextProvider(props: { children: ReactNode }) {
   }, [getUserId, userId]);
 
   return (
-    <UserContext.Provider value={{ userId, setUserId }}>
+    <UserContext.Provider value={{ userId, setUserId, userData, updateData }}>
       {props.children}
     </UserContext.Provider>
   );
