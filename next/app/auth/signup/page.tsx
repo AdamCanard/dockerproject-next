@@ -1,5 +1,6 @@
 "use client";
 
+import UserModal from "@/app/components/UserModal";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -42,7 +43,7 @@ export default function Page() {
       }
     >
       {modal ? (
-        <Modal userId={userId} />
+        <UserModal userId={userId} />
       ) : (
         <div className={"Box"}>
           <h1>SignUp</h1>
@@ -70,17 +71,6 @@ export default function Page() {
           </form>
         </div>
       )}
-    </div>
-  );
-}
-
-export function Modal(props: { userId: number }) {
-  const router = useRouter();
-  return (
-    <div className={" w-64 h-48  aboslute Box "}>
-      <div> Your userId is {props.userId}</div>
-      <div>DON&apos;T FORGET IT</div>
-      <button onClick={() => router.push("/auth/login")}>Login</button>
     </div>
   );
 }
