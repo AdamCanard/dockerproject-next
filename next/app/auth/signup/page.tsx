@@ -44,7 +44,7 @@ export default function Page() {
       {modal ? (
         <Modal userId={userId} />
       ) : (
-        <>
+        <div className={"Box"}>
           <h1>SignUp</h1>
           <form
             className={"w-72 flex flex-col gap-2"}
@@ -68,7 +68,7 @@ export default function Page() {
               <button>Submit</button>
             </div>
           </form>
-        </>
+        </div>
       )}
     </div>
   );
@@ -77,11 +77,7 @@ export default function Page() {
 export function Modal(props: { userId: number }) {
   const router = useRouter();
   return (
-    <div
-      className={
-        "flex w-64 h-48 border-2 aboslute flex-col gap-2 justify-center items-center"
-      }
-    >
+    <div className={" w-64 h-48  aboslute Box "}>
       <div> Your userId is {props.userId}</div>
       <div>DON&apos;T FORGET IT</div>
       <button onClick={() => router.push("/auth/login")}>Login</button>

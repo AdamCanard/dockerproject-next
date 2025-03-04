@@ -38,7 +38,7 @@ function UserFile() {
     setCurrentUserData(userData);
   }, [userData]);
   return (
-    <div className={"flex flex-col w-96 h-64 justify-center items-center "}>
+    <div className={" flex-col w-96 h-64 Box "}>
       <textarea
         autoFocus
         className={"w-full h-full resize-none"}
