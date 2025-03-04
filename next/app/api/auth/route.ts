@@ -1,4 +1,4 @@
-import { pool } from "@/app/server/postgres";
+import { client } from "@/app/server/postgres";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
@@ -15,7 +15,7 @@ export async function GET() {
   SELECT userdata FROM USERS
   WHERE userid = ${userId?.value}
 `;
-  const result = await pool.query(query);
+  const result = await client.query(query);
   const userData = result.rows[0].userdata;
 
   return new Response(JSON.stringify({ userId: userId, userData: userData }), {

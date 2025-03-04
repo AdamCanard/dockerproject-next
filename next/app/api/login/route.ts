@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
-import { pool } from "../../server/postgres";
+import { client } from "../../server/postgres";
 export async function POST(req: Request) {
   const body = await req.json();
   const query = `
   SELECT password FROM USERS
   WHERE userid = ${body.userId}
 `;
-  const result = await pool.query(query);
+  const result = await client.query(query);
   if (result.rows.length === 1) {
     if (result.rows[0].password === body.password) {
       const cookieInstance = await cookies();

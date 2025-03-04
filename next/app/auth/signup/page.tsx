@@ -5,6 +5,9 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function Page() {
   const [password, setPassword] = useState<string>("");
+  const [userId, setUserId] = useState<number>(0);
+  const [modal, setModal] = useState<boolean>(false);
+
   const router = useRouter();
 
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,10 +19,10 @@ export default function Page() {
         method: "POST",
         body: formData,
       });
-      console.log(response);
-      console.log(await response.json());
       if (response.status === 201) {
-        //router.push("/auth/login");
+        const data = await response.json();
+        setUserId(data.userId);
+        setModal(true);
       }
     } catch (e) {
       console.log(e);
@@ -38,29 +41,50 @@ export default function Page() {
         "flex flex-col gap-2 justify-center items-center w-full h-full "
       }
     >
-      <h1>SignUp</h1>
-      <form
-        className={"w-72 flex flex-col gap-2"}
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <div className={"w-full flex justify-between"}>
-          <label>Password:</label>
-          <input
-            name="password"
-            value={password}
-            onChange={(e) => {
-              handlePassword(e);
-            }}
-          />
-        </div>
-        <div className={"w-full flex flex-row justify-between"}>
-          <button onClick={() => router.push("/auth/login")} type="button">
-            {" "}
-            Login
-          </button>
-          <button>Submit</button>
-        </div>
-      </form>
+      {modal ? (
+        <Modal userId={userId} />
+      ) : (
+        <>
+          <h1>SignUp</h1>
+          <form
+            className={"w-72 flex flex-col gap-2"}
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <div className={"w-full flex justify-between"}>
+              <label>Password:</label>
+              <input
+                name="password"
+                value={password}
+                onChange={(e) => {
+                  handlePassword(e);
+                }}
+              />
+            </div>
+            <div className={"w-full flex flex-row justify-between"}>
+              <button onClick={() => router.push("/auth/login")} type="button">
+                {" "}
+                Login
+              </button>
+              <button>Submit</button>
+            </div>
+          </form>
+        </>
+      )}
+    </div>
+  );
+}
+
+export function Modal(props: { userId: number }) {
+  const router = useRouter();
+  return (
+    <div
+      className={
+        "flex w-64 h-48 border-2 aboslute flex-col gap-2 justify-center items-center"
+      }
+    >
+      <div> Your userId is {props.userId}</div>
+      <div>DON&apos;T FORGET IT</div>
+      <button onClick={() => router.push("/auth/login")}>Login</button>
     </div>
   );
 }
