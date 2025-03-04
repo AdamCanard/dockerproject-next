@@ -3,10 +3,10 @@ export async function POST(req: Request) {
   const formData = await req.formData();
   const password = formData.get("password" as string);
   const query = `
- INSERT INTO users VALUES ('${password}') 
+ INSERT INTO users (password) VALUES ('${password}') 
 `;
+  const result = await pool.query(query);
   try {
-    const result = await pool.query(query);
     return new Response(JSON.stringify({ result }), {
       status: 201,
     });

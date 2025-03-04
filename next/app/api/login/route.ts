@@ -1,18 +1,18 @@
 import { cookies } from "next/headers";
 import { pool } from "../../server/postgres";
 export async function POST(req: Request) {
-  const formData = await req.formData();
-  const userId = formData.get("username" as string);
-  const password = formData.get("password" as string);
+  const body = await req.json();
   const query = `
   SELECT password FROM USERS
-  WHERE userid = ${userId}
+  WHERE userid = ${body.userId}
 `;
   const result = await pool.query(query);
   if (result.rows.length === 1) {
-    if (result.rows[0].password === password) {
+    if (result.rows[0].password === body.password) {
       const cookieInstance = await cookies();
-      cookieInstance.set("userId", userId as string, { sameSite: "strict" });
+      cookieInstance.set("userId", body.userId as string, {
+        sameSite: "strict",
+      });
       return new Response(JSON.stringify({}), {
         status: 200,
       });
