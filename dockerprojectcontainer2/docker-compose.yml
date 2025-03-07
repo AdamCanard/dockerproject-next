@@ -1,0 +1,36 @@
+services:
+  postgresql:
+    container_name: db-container2
+    build:
+      context: ./postgres
+
+    ports:
+      - 5433:5433
+
+    env_file: ./postgres/.env
+
+    volumes:
+      #Persist Data
+      - ./db-data/:/var/lib/postgresql/data/
+      #Init Script
+      - ./postgres/init/:/docker-entrypoint-initdb.d
+
+    networks:
+      - dockerproject
+
+  next:
+    container_name: next-container2
+    build:
+      context: ./next
+    develop:
+      watch:
+        - path: ./next
+          target: /app
+          action: sync
+    ports:
+      - 3001:3001
+    networks:
+      - dockerproject
+
+networks:
+  dockerproject:
