@@ -1,11 +1,11 @@
 services:
   postgresql:
-    container_name: db-container
+    container_name: db-container2
     build:
       context: ./postgres
 
     ports:
-      - 5432:5432
+      - 5433:5432
 
     env_file: ./postgres/.env
 
@@ -19,7 +19,7 @@ services:
       - dockerproject
 
   next:
-    container_name: next-container
+    container_name: next-container2
     build:
       context: ./next
     develop:
@@ -28,7 +28,7 @@ services:
           target: /app
           action: sync
     ports:
-      - 3000:3000
+      - 3001:3001
     networks:
       - dockerproject
 
