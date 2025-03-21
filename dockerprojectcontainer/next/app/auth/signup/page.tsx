@@ -22,6 +22,7 @@ export default function Page() {
       });
       if (response.status === 201) {
         const data = await response.json();
+        console.log(response);
         setUserId(data.userId);
         setModal(true);
       }
