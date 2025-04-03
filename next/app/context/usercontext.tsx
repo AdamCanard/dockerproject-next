@@ -19,7 +19,7 @@ interface IUserContext {
 export const UserContext = createContext({} as IUserContext);
 
 export default function UserContextProvider(props: { children: ReactNode }) {
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState(-1);
   const [userData, setUserData] = useState("");
 
   const getUserId = useCallback(async () => {

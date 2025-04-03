@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       cookieInstance.set("userId", body.userId as string, {
         sameSite: "strict",
       });
-      return new Response(JSON.stringify({}), {
+      return new Response(JSON.stringify({ userId: body.userId }), {
         status: 200,
       });
     }
