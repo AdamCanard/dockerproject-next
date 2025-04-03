@@ -1,6 +1,0 @@
-Requirements:
-Node.js V22.13.0
-Next.js V15.1.6
-Node-Postgres or "pg" V8.13.2
-
-
