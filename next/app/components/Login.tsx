@@ -30,6 +30,7 @@ export default function Login() {
       setLoginUserId(0);
       setPassword("");
       setUserId(data.userId);
+      console.log(response);
     } catch (e) {
       console.log(e);
     }

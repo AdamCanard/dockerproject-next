@@ -16,6 +16,7 @@ export default function UserList() {
       if (response.status === 200) {
         const data = await response.json();
         setUserList(data);
+        console.log(response);
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
@@ -30,7 +31,7 @@ export default function UserList() {
     }
   }, [userList]);
   return (
-    <div className={"Box w-80 "}>
+    <div className={"Box w-80 h-full overflow-y-scroll flex flex-col"}>
       {userList.map((user: IUser, index: number) => {
         return <User user={user} key={index} />;
       })}

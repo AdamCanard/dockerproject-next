@@ -1,5 +1,6 @@
 import CurrentUser from "./components/CurrentUser";
 import Delete from "./components/Delete";
+import GetUser from "./components/GetUser";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import UserFile from "./components/UserFile";
@@ -16,6 +17,7 @@ export default function Home() {
           <Login />
           <Delete />
           <UserFile />
+          <GetUser />
         </UserContextProvider>
       </div>
       <UserList />
