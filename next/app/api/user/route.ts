@@ -31,3 +31,13 @@ export async function DELETE(req: Request) {
     );
   }
 }
+export async function GET() {
+  const query = `
+  SELECT userId, password FROM USERS
+`;
+  const result = await client.query(query);
+  console.log(result.rows);
+  return new Response(JSON.stringify(result.rows), {
+    status: 200,
+  });
+}
